@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{template "header"}}
+    <title>@artamananda | Send a message</title>
+  </head>
+
+  <body>
+    <div class="px-6 pt-8 pb-6">
+      <h3 class="text-xl text-center font-bold">
+        Berikan pesan anonim kepada Arta
+      </h3>
+    </div>
+    <div class="bg-gray-200 rounded-2xl p-8 text-center w-11/12 mx-auto">
+      <form action="/api/message/add" method="post">
+        <div class="mb-3 text-center">
+          <label
+            class="block text-gray-700 text-lg font-medium mb-2"
+            for="question"
+          >
+            Pesanmu :
+          </label>
+          <textarea
+            class="w-11/12 rounded-3xl shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            name="question"
+            id="question"
+            rows="4"
+            placeholder="Tulis pesanmu disini ..."
+          ></textarea>
+        </div>
+        <div class="mb-4 text-center">
+          <button
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="submit"
+          >
+            Kirim
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="px-6 pt-10 pb-4">
+      <h3 class="text-xl text-center font-bold">Pesan sebelumnya</h3>
+    </div>
+    {{range $element := .}}
+    <div
+      id="quest"
+      class="font-bold bg-gray-200 rounded-2xl p-8 my-4 w-11/12 mx-auto"
+    >
+      <div class="font-light">{{$element.created_at}}</div>
+      {{$element.question}}
+    </div>
+    {{end}} {{template "footer"}}
+  </body>
+</html>
