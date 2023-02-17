@@ -20,3 +20,7 @@ func (api *API) IndexPage(w http.ResponseWriter, r *http.Request) {
 	}
 	tmpl.ExecuteTemplate(w, "message.html", data)
 }
+
+func (api *API) Favicon(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "assets/icon/favicon.png")
+}

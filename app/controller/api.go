@@ -30,6 +30,7 @@ func NewAPI(messageRepo repository.MessageRepo, embed embed.FS) API {
 	}
 
 	mux.HandleFunc("/", api.IndexPage)
+	mux.HandleFunc("/icon", api.Favicon)
 
 	mux.Handle("/api/message/add", http.HandlerFunc(api.AddMessage))
 	mux.Handle("/api/message/read", http.HandlerFunc(api.ReadMessage))
