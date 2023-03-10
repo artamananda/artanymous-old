@@ -10,23 +10,24 @@ import (
 )
 
 func (api *API) AddMessage(w http.ResponseWriter, r *http.Request) {
-	var message model.Message
-	err := json.NewDecoder(r.Body).Decode(&message)
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+	if r.Method == "GET" {
+		w.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(w).Encode(model.ErrorResponse{Error: "Internal Server Error"})
 		return
 	}
+	var message model.Message
+	message.Question = r.FormValue("question")
 
-	err = api.messageRepo.AddMessage(message)
+	err := api.messageRepo.AddMessage(message)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(w).Encode(model.ErrorResponse{Error: "Internal Server Error"})
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(model.SuccessResponse{Msg: "Message Added"})
+	// w.WriteHeader(http.StatusOK)
+	// json.NewEncoder(w).Encode(model.SuccessResponse{Msg: "Message Added"})
+	http.Redirect(w, r, "/", http.StatusFound)
 }
 
 func (api *API) ReadMessage(w http.ResponseWriter, r *http.Request) {
